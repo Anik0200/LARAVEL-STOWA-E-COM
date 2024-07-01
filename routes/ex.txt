@@ -1,0 +1,21 @@
+                            <li class="has-sub" id="role">
+
+                                <a class="sidenav-item-link" href="#" data-toggle="collapse" data-target="#ROLE"
+                                    aria-expanded="false" aria-controls="ROLE">
+                                    <i class="mdi mdi-account-outline"></i>
+                                    <span class="nav-text">Role Permission</span> <b class="caret"></b>
+                                </a>
+
+                                <ul class="collapse" id="ROLE" data-parent="#sidebar-menu">
+                                    <div class="sub-menu">
+
+                                        <li class="mr-5">
+                                            <a class="sidenav-item-link" href="{{ route('backend.role.create') }}">
+                                                <span class="nav-text">Create</span>
+                                            </a>
+                                        </li>
+
+                                    </div>
+                                </ul>
+
+                            </li>
