@@ -44,6 +44,12 @@ cp .env.example .env
 php artisan key:generate
 ```
 
+- Link Storage:
+
+```
+php artisan storage:link
+```
+
 - Seed Database:
 
 ```
