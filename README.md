@@ -1,6 +1,6 @@
 ## ABOUT THIS PROJECT :
 
-This Is a Blog Site Project repository! 
+This Is a E-commerce Project repository! 
 This project is a fully-featured e-commerce platform built with the popular framework LARAVEL. 
 
 ## FEATURES :
