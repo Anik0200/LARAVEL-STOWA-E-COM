@@ -1,7 +1,7 @@
 ## ABOUT THIS PROJECT :
 
 This Is a Blog Site Project repository! 
-This project is a fully-featured blogging platform built with the popular PHP laguage. 
+This project is a fully-featured e-commerce platform built with the popular framework LARAVEL. 
 
 ## FEATURES :
 
