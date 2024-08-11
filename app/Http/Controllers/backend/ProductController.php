@@ -38,36 +38,37 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "title"             => 'required|unique:products,title',
-            "sku"               => 'required|unique:products,sku',
-            "price"             => 'required|integer',
-            "sale_price"        => 'nullable|integer',
-            "categories"        => 'required',
+            "title" => 'required|unique:products,title',
+            "sku" => 'required|unique:products,sku',
+            "price" => 'required|integer',
+            "sale_price" => 'nullable|integer',
+            "categories" => 'required',
             "short_description" => 'nullable|max:400',
-            "description"       => 'nullable|max:200',
-            "add_info"          => 'nullable|max:200',
-            "image"             => 'required|mimes:jpg,png,jpeg,webp',
+            "description" => 'nullable|max:200',
+            "add_info" => 'nullable|max:200',
+            "image" => 'required|mimes:jpg,png,jpeg,webp',
         ]);
 
         $image = $request->file('image');
 
         if ($image) {
             $imageName = Str::uuid() . '.' . $image->extension();
-            $imageUp   = Image::make($image)->crop(400, 400)->save(public_path('storage/product/' . $imageName));
+            // $imageUp   = Image::make($image)->crop(400, 400)->save(public_path('storage/product/' . $imageName));
+            $imageUp = $image->move(public_path('storage/product'), $imageName);
         }
 
         if ($imageUp) {
 
             $product = Product::create([
-                "user_id"           => auth()->user()->id,
-                "title"             => $request->title,
-                "sku"               => $request->sku,
-                "price"             => $request->price,
-                "sale_price"        => $request->sale_price,
+                "user_id" => auth()->user()->id,
+                "title" => $request->title,
+                "sku" => $request->sku,
+                "price" => $request->price,
+                "sale_price" => $request->sale_price,
                 "short_description" => $request->short_description,
-                "description"       => $request->description,
-                "add_info"          => $request->add_info,
-                "image"             => $imageName,
+                "description" => $request->description,
+                "add_info" => $request->add_info,
+                "image" => $imageName,
             ]);
         }
 
@@ -82,11 +83,12 @@ class ProductController extends Controller
 
                 $galleryImgName = Str::uuid() . '.' . $galleryImg->extension();
 
-                Image::make($galleryImg)->crop(400, 400)->save(public_path('storage/product/' . $galleryImgName));
+                // Image::make($galleryImg)->crop(400, 400)->save(public_path('storage/product/' . $galleryImgName));
+                $galleryImg->move(public_path('storage/product'), $galleryImgName);
 
                 ProductGallery::create([
                     'product_id' => $product->id,
-                    'image'      => $galleryImgName,
+                    'image' => $galleryImgName,
                 ]);
             }
         }
@@ -110,7 +112,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $categories = Category::get(['id', 'name']);
-        $product    = Product::find($id);
+        $product = Product::find($id);
         return view('backend.product.edit', compact('product', 'categories'));
     }
 
@@ -122,22 +124,23 @@ class ProductController extends Controller
         $product = Product::find($id);
 
         $request->validate([
-            "title"             => 'required',
-            "sku"               => 'required',
-            "price"             => 'required',
-            "sale_price"        => 'nullable',
-            "categories"        => 'required',
+            "title" => 'required',
+            "sku" => 'required',
+            "price" => 'required',
+            "sale_price" => 'nullable',
+            "categories" => 'required',
             "short_description" => 'nullable|max:400',
-            "description"       => 'nullable|max:200',
-            "add_info"          => 'nullable|max:200',
-            "image"             => 'nullable|mimes:jpg,png,jpeg,webp',
+            "description" => 'nullable|max:200',
+            "add_info" => 'nullable|max:200',
+            "image" => 'nullable|mimes:jpg,png,jpeg,webp',
         ]);
 
         $image = $request->file('image');
 
         if ($image) {
             $imageName = Str::uuid() . '.' . $image->extension();
-            Image::make($image)->crop(400, 400)->save(public_path('storage/product/' . $imageName));
+            // Image::make($image)->crop(400, 400)->save(public_path('storage/product/' . $imageName));
+            $image->move(public_path('storage/product'), $imageName);
 
             $image_path = public_path('storage/product/' . $product->image);
 
@@ -150,15 +153,15 @@ class ProductController extends Controller
         }
 
         $product->update([
-            "user_id"           => auth()->user()->id,
-            "title"             => $request->title,
-            "sku"               => $request->sku,
-            "price"             => $request->price,
-            "sale_price"        => $request->sale_price,
+            "user_id" => auth()->user()->id,
+            "title" => $request->title,
+            "sku" => $request->sku,
+            "price" => $request->price,
+            "sale_price" => $request->sale_price,
             "short_description" => $request->short_description,
-            "description"       => $request->description,
-            "add_info"          => $request->add_info,
-            "image"             => $imageName,
+            "description" => $request->description,
+            "add_info" => $request->add_info,
+            "image" => $imageName,
         ]);
 
         $product->categories()->sync($request->categories);
@@ -181,11 +184,12 @@ class ProductController extends Controller
 
                 $galleryImgName = Str::uuid() . '.' . $galleryImg->extension();
 
-                Image::make($galleryImg)->crop(400, 400)->save(public_path('storage/product/' . $galleryImgName));
+                // Image::make($galleryImg)->crop(400, 400)->save(public_path('storage/product/' . $galleryImgName));
+                $galleryImg->move(public_path('storage/product'), $galleryImgName);
 
                 ProductGallery::create([
                     'product_id' => $product->id,
-                    'image'      => $galleryImgName,
+                    'image' => $galleryImgName,
                 ]);
                 //
             }
@@ -218,7 +222,8 @@ class ProductController extends Controller
 
             $ImgName = Str::uuid() . '.' . $file->extension();
 
-            Image::make($file)->crop(400, 400)->save(public_path('storage/product/' . $ImgName));
+            // Image::make($file)->crop(400, 400)->save(public_path('storage/product/' . $ImgName));
+            $file->move(public_path('storage/product'), $ImgName);
 
             $image_path = public_path('storage/product/' . $gallImg->image);
 

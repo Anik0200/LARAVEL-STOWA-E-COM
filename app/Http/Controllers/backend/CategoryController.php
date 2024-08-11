@@ -68,7 +68,8 @@ class CategoryController extends Controller
         if ($file) {
 
             $imageName = time() . '.' . $file->getClientOriginalName();
-            Image::make($file)->crop(200, 200)->save(public_path('storage/category/' . $imageName));
+            // Image::make($file)->crop(200, 200)->save(public_path('storage/category/' . $imageName));
+            $file->move(public_path('storage/category'), $imageName);
         }
 
         Category::create([
@@ -133,7 +134,8 @@ class CategoryController extends Controller
         if ($file) {
 
             $imageName = time() . '_' . $file->getClientOriginalName();
-            Image::make($file)->crop(200, 200)->save(public_path('storage/category/' . $imageName));
+            // Image::make($file)->crop(200, 200)->save(public_path('storage/category/' . $imageName));
+            $file->move(public_path('storage/category'), $imageName);
         }
 
         if ($file) {
