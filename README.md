@@ -56,9 +56,7 @@ php artisan storage:link
 - Seed Database:
 
 ```
-php artisan migrate:fresh
-
-php artisan db:seed
+php artisan migrate:fresh --seed
 ```
 
 - Start the local development server:
