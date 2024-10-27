@@ -29,7 +29,10 @@ This project is a fully-featured e-commerce platform built with the popular fram
 
 ```
 composer install
-npm install
+
+npm install 
+
+npm run dev
 ```
 
 - Create a copy of the .env file:
@@ -53,6 +56,8 @@ php artisan storage:link
 - Seed Database:
 
 ```
+php artisan migrate:fresh
+
 php artisan db:seed
 ```
 
